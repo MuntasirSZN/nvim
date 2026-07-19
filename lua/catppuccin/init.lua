@@ -55,29 +55,9 @@ local M = {
 				background = true,
 			},
 		},
-		default_integrations = true,
-		auto_integrations = false,
+		auto_integrations = true,
 		integrations = {
-			alpha = true,
-			blink_cmp = { enabled = true, style = "bordered" },
-			blink_indent = true,
-			fzf = true,
-			cmp = true,
-			dap = true,
-			dap_ui = true,
-			dashboard = true,
-			diffview = false,
-			flash = true,
-			gitsigns = true,
-			markdown = true,
-			neogit = true,
-			neotree = true,
-			nvimtree = true,
-			ufo = true,
-			rainbow_delimiters = true,
-			render_markdown = true,
-			telescope = { enabled = true },
-			treesitter_context = true,
+			blink_cmp = { style = "bordered" },
 			barbecue = {
 				dim_dirname = true,
 				bold_basename = true,
@@ -85,35 +65,27 @@ local M = {
 				alt_background = false,
 			},
 			illuminate = {
-				enabled = true,
 				lsp = false,
 			},
 			indent_blankline = {
-				enabled = true,
 				scope_color = "",
 				colored_indent_levels = false,
 			},
 			navic = {
-				enabled = false,
 				custom_bg = "NONE",
 			},
 			dropbar = {
-				enabled = true,
 				color_mode = false,
 			},
 			colorful_winsep = {
-				enabled = false,
 				color = "red",
 			},
 			mini = {
-				enabled = true,
 				indentscope_color = "overlay2",
 			},
 			lir = {
-				enabled = false,
 				git_status = false,
 			},
-			snacks = { enabled = false },
 		},
 		color_overrides = {},
 		highlight_overrides = {},
@@ -183,20 +155,6 @@ function M.setup(user_conf)
 			require("catppuccin.lib.detect_integrations").create_integrations_table(),
 			user_conf.integrations or {}
 		)
-	end
-
-	if user_conf.default_integrations == false then M.default_options.integrations = {} end
-	if user_conf.default_integrations == false then
-		M.default_options.integrations = vim.iter(pairs(M.default_options.integrations))
-			:fold({}, function(integrations, name, opts)
-				if type(opts) == "table" then
-					opts.enabled = false
-				else
-					opts = false
-				end
-				integrations[name] = opts
-				return integrations
-			end)
 	end
 
 	M.options = vim.tbl_deep_extend("keep", user_conf, M.default_options)
